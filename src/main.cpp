@@ -16,7 +16,7 @@
 #include <string>
 using namespace std;
 
-int main( int argc, char* argv[] ){
+int main( int argc, char* argv[]){
 	InitURandom(); 
 	int maxNumOfTrial;
 
@@ -29,6 +29,8 @@ int main( int argc, char* argv[] ){
 	scanf("%d", &gEnv->fNumOfPop);
 	scanf("%d", &gEnv->fNumOfKids);
 	*/
+
+	/* EXAMPLE TESTS CASES
 	vector<string> exampleTspMaps{
 		"../tc/eil101.tsp",
 		"../tc/att532.tsp",
@@ -47,9 +49,11 @@ int main( int argc, char* argv[] ){
 	} while (id < 0 || id > 4);
 
 	strcpy(gEnv->fFileNameTSP, exampleTspMaps[id].c_str());
- 	//scanf("%s", gEnv->fFileNameTSP);
+	*/
+
+	gEnv->fFileNameTSP = argv[1];
 	
-	maxNumOfTrial = 5; // repeated times
+	maxNumOfTrial = 1; // repeated times
 	gEnv->Npop = 100; // number of items
 	gEnv->Nch = 30; // number of offsprings
 
@@ -61,6 +65,5 @@ int main( int argc, char* argv[] ){
 		gEnv->printOn(n);
 		gEnv->writeBest();
 	}
-	//system("pause");
 	return 0;
 }

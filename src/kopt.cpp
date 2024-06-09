@@ -162,7 +162,7 @@ void TKopt::doIt( TIndi& tIndi ){
 
 void TKopt::sub(){
 	int t1_st;
-	int dis1, dis2;
+	double dis1, dis2;
 	for( int t = 0; t < fN; ++t ) fActiveV[ t ] = 1;
 BEGIN:
 	t1_st = rand()%fN;
@@ -177,9 +177,9 @@ BEGIN:
 			fT[4] = eval->fNearCity[ fT[1] ][ num1 ];
 			fT[3] = this->getPrev( fT[4] );
 			dis1 = eval->fEdgeDis[fT[1]][fT[2]] - eval->fEdgeDis[fT[1]][fT[4]];
-			if( dis1 > 0 ){
+			if( dis1 > 1e-3 ){
 				dis2 = dis1 + eval->fEdgeDis[fT[3]][fT[4]] - eval->fEdgeDis[fT[3]][fT[2]];
-				if( dis2 > 0 ){
+				if( dis2 > 1e-3 ){
 					this->incrementImp( fFlagRev );
 					for( int a = 1; a <= 4; ++a )
 						for( int k = 0; k < fNumOfINL[fT[a]]; ++k )
@@ -195,9 +195,9 @@ BEGIN:
 			fT[4] = eval->fNearCity[ fT[1] ][ num1 ];
 			fT[3] = this->getNext( fT[4] );
 			dis1 = eval->fEdgeDis[fT[1]][fT[2]] - eval->fEdgeDis[fT[1]][fT[4]];
-			if( dis1 > 0 ){
+			if( dis1 > 1e-3 ){
 				dis2 = dis1 + eval->fEdgeDis[fT[3]][fT[4]] - eval->fEdgeDis[fT[3]][fT[2]];
-				if( dis2 > 0 ){
+				if( dis2 > 1e-3 ){
 					this->incrementImp( fFlagRev );
 					for( int a = 1; a <= 4; ++a )
 						for( int k = 0; k < fNumOfINL[fT[a]]; ++k )

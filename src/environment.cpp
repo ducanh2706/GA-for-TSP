@@ -30,14 +30,16 @@ void TEnvironment::define(){
 	int N = fEvaluator->Ncity;
 	fIndexForMating.resize(Npop + 1);
 
-	tCurPop = new TIndi [ Npop ];
+	tCurPop = new TIndi [ Npop ]; // Population
 	for ( int i = 0; i < Npop; ++i ) {
-		tCurPop[i].define( N );
+		tCurPop[i].define( N ); // Initializes the population
 	}
-	tBest.define( N );
+	tBest.define( N ); // Best solution from the current population
+
 	tCross = new TCross( N );
 	tCross->eval = fEvaluator;
 	tCross->Npop = Npop;
+
 	tKopt = new TKopt( N );
 	tKopt->eval = fEvaluator;
 	tKopt->setInvNearList();
@@ -58,7 +60,7 @@ void TEnvironment::doIt(){
 	this->getEdgeFreq();
 	while( 1 ){
 		this->setAverageBest();
-		printf( "%d:\t%d\t%lf\n", fCurNumOfGen, fBestValue, fAverageValue );
+		printf( "%d:\t%f\t%lf\n", fCurNumOfGen, fBestValue, fAverageValue );
 		if( this->terminationCondition() ) break;
 
 		this->selectForMating();
@@ -104,7 +106,7 @@ bool TEnvironment::terminationCondition(){
 }
 
 void TEnvironment::setAverageBest(){
-	int stockBest = tBest.fEvaluationValue;
+	double stockBest = tBest.fEvaluationValue;
 	fAverageValue = 0.0;
 	fBestIndex = 0;
 	fBestValue = tCurPop[0].fEvaluationValue;
@@ -123,6 +125,8 @@ void TEnvironment::setAverageBest(){
 		fBestAccumeratedNumCh = fAccumurateNumCh;
 	}
 	else ++fStagBest;
+
+	// cout << fixed << setprecision(2) << "Best: " << fBestValue << " Average: " << fAverageValue << endl;
 }
 
 void TEnvironment::initPop(){
@@ -139,7 +143,7 @@ void TEnvironment::selectForMating(){
 
 void TEnvironment::generateKids( int s ){
 	// tCurPop[fIndexForMating[s]] gets replaced by the best solution in tCross->DoIt()
-	// fEdgeFreq[][] 同时被更新
+	// fEdgeFreq[][] 同时锟斤拷锟斤拷锟斤拷
 	tCross->setParents( tCurPop[fIndexForMating[s]], tCurPop[fIndexForMating[s+1]], fFlagC, Nch );
 	tCross->doIt( tCurPop[fIndexForMating[s]], tCurPop[fIndexForMating[s+1]], Nch, 1, fFlagC, fEdgeFreq );
 	fAccumurateNumCh += tCross->fNumOfGeneratedCh;
@@ -162,9 +166,9 @@ void TEnvironment::getEdgeFreq(){
 }
 
 void TEnvironment::printOn( int n ){
-	printf( "n = %d val = %d Gen = %d Time = %d %d\n" , n, tBest.fEvaluationValue, fCurNumOfGen,
-		(int)((double)(this->fTimeInit - this->fTimeStart)/(double)CLOCKS_PER_SEC),
-		(int)((double)(this->fTimeEnd - this->fTimeStart)/(double)CLOCKS_PER_SEC) );
+	printf( "n = %d val = %f Gen = %d Time = %f %f\n" , n, tBest.fEvaluationValue, fCurNumOfGen,
+		((double)(this->fTimeInit - this->fTimeStart)/(double)CLOCKS_PER_SEC),
+		((double)(this->fTimeEnd - this->fTimeStart)/(double)CLOCKS_PER_SEC) );
 	fflush(stdout);
 
 }

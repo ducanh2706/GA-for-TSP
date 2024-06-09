@@ -106,7 +106,7 @@ private:
 	int fNumOfSPL;
 	int fNumOfElementInCU;
 	int fNumOfSegForCenter;
-	int fGainModi;
+	double fGainModi;
 	int fNumOfModiEdge;
 	int fNumOfBestModiEdge;
 	int fNumOfAppliedCycle;
@@ -122,7 +122,7 @@ private:
 	vector<int> fCenterUnit;
 	vector<int> fListOfCenterUnit;
 	vector<int> fSegForCenter;
-	vector<int> fGainAB;
+	vector<double> fGainAB;
 	vector<int> fAppliedCylce;
 	vector<int> fBestAppliedCylce;
 

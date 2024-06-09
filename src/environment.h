@@ -34,6 +34,7 @@
 #include <string.h>
 #include <time.h>
 #include <vector>
+#include <iomanip>
 
 class TEnvironment{
 public:
@@ -70,7 +71,7 @@ public:
 	long int fBestAccumeratedNumCh; // accumulated number of generations of the current best solution
 	vector<vector<int>> fEdgeFreq; // edge frequency of a population
 	double fAverageValue; // average road length of TSP in a population
-	int fBestValue; // road length of the best solution in a population
+	double fBestValue; // road length of the best solution in a population
 	int fBestIndex;	// index of the best solution in a population
 
 	vector<int> fIndexForMating; // list for edge cross operation

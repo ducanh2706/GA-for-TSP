@@ -143,8 +143,8 @@ void TCross::setParents( const TIndi& tPa1, const TIndi& tPa2, int flagC[10], in
 void TCross::doIt( TIndi& tKid, TIndi& tPa2, int numOfKids, int flagP, int flagC[ 10 ], vector<vector<int>>& fEdgeFreq ){
 	int Num;
 	int jnum, centerAB;
-	int gain;
-	int BestGain;
+	double gain;
+	double BestGain;
 	double pointMax, point;
 	double DLoss;
 
@@ -389,7 +389,7 @@ void TCross::formABcycle(){
 	int edge_type;
 	int st,ci, stock;
 	int cem;
-	int diff;
+	double diff;
 
 	if(fPosiCurr%2==0) edge_type=1;
 	else edge_type=2;
@@ -495,7 +495,7 @@ void TCross::makeCompleteSol( TIndi& tKid ){
 	int st ,pre, curr, next, a, b, c, d, aa, bb, a1, b1;
 	int min_unit_city;
 	int center_un, select_un;
-	int diff, max_diff;
+	double diff, max_diff;
 	int near_num, nearMax;
 
 	fGainModi = 0;
@@ -982,7 +982,7 @@ double TCross::calEntLoss(vector<vector<int>>& fEdgeFreq){
 	}
 	DLoss = -DLoss;
 
-	// ¸üÐÂ EdgeFreq
+	// ï¿½ï¿½ï¿½ï¿½ EdgeFreq
 	for( int s = 0; s < fNumOfAppliedCycle; ++s ){
 		jnum = fAppliedCylce[ s ];
 

@@ -23,7 +23,7 @@ public:
 
 	int fN; // the number of cities
 	int** fLink; // fLink[i][] is the two adjacent cities of city i
-	int fEvaluationValue; // the road length of TSP
+	double fEvaluationValue; // the road length of TSP
 };
 
 #endif

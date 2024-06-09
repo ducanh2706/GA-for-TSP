@@ -55,7 +55,7 @@ void TEvaluator::setInstance(const string& filename) {
 
 	fEdgeDis.clear();
 	for (int i = 0; i < Ncity; i++) {
-		vector<int> row(Ncity);
+		vector<double> row(Ncity);
 		fEdgeDis.push_back(row);
 	}
 
@@ -69,17 +69,12 @@ void TEvaluator::setInstance(const string& filename) {
 		std::cout << fEdgeDis.size() << " " << fEdgeDis[0].size() << std::endl;
 		for( int i = 0; i < Ncity ; ++i )
 			for( int j = 0; j < Ncity ; ++j )
-				fEdgeDis[ i ][ j ]=(int)(sqrt((x[i]-x[j])*(x[i]-x[j])+(y[i]-y[j])*(y[i]-y[j]))+0.5);
+				fEdgeDis[ i ][ j ]= sqrt((x[i]-x[j])*(x[i]-x[j])+(y[i]-y[j])*(y[i]-y[j]));
 	} else if ( strcmp( type, "ATT" ) == 0  ) {
 		for( int i = 0; i < Ncity; ++i ){
 			for( int j = 0; j < Ncity; ++j ) {
 				double r = (sqrt(((x[i]-x[j])*(x[i]-x[j])+(y[i]-y[j])*(y[i]-y[j]))/10.0));
-				int t = (int)r;
-				if( (double)t < r ) {
-					fEdgeDis[ i ][ j ] = t+1;
-				} else {
-					fEdgeDis[ i ][ j ] = t;
-				}
+				fEdgeDis[ i ][ j ] = r;
 			}
 		}
 	} else if (strcmp( type, "CEIL_2D" ) == 0) {
@@ -94,7 +89,7 @@ void TEvaluator::setInstance(const string& filename) {
 	}
 	int ci, j1, j2, j3;
 	int cityNum = 0;
-	int minDis;
+	double minDis;
 	for( ci = 0; ci < Ncity; ++ci ){
 		for( j3 = 0; j3 < Ncity; ++j3 ) checkedN[ j3 ] = 0;
 		checkedN[ ci ] = 1;
@@ -114,9 +109,9 @@ void TEvaluator::setInstance(const string& filename) {
 }
 
 void TEvaluator::doIt( TIndi& indi ) {
-	int d = 0;
+	double d = 0;
 	for( int i = 0; i < Ncity; ++i ) d += fEdgeDis[ i ][ indi.fLink[i][0] ] + fEdgeDis[ i ][ indi.fLink[i][1] ];
-	indi.fEvaluationValue = d/2;
+	indi.fEvaluationValue = d / 2.0;
 }
 
 void TEvaluator::writeTo( FILE* fp, TIndi& indi ){
@@ -138,26 +133,26 @@ void TEvaluator::writeTo( FILE* fp, TIndi& indi ){
 	if( this->checkValid( Array, indi.fEvaluationValue ) == false )
 		printf( "Individual is invalid \n" );
 
-	fprintf( fp, "%d %d\n", indi.fN, indi.fEvaluationValue );
+	fprintf( fp, "%d %f\n", indi.fN, indi.fEvaluationValue );
 	for( int i = 0; i < indi.fN; ++i )
 		fprintf( fp, "%d ", Array[ i ] );
 	fprintf( fp, "\n" );
 }
 
-bool TEvaluator::checkValid(vector<int>& array, int value) {
+bool TEvaluator::checkValid(vector<int>& array, double value) {
 	int *check=new int[Ncity];
 	for( int i = 0; i < Ncity; ++i ) check[ i ] = 0;
 	for( int i = 0; i < Ncity; ++i ) ++check[ array[ i ]-1 ];
 	for( int i = 0; i < Ncity; ++i )
 		if( check[ i ] != 1 ) return false;
-	int distance = 0;
+	double distance = 0;
 	for( int i = 0; i < Ncity-1; ++i )
 		distance += fEdgeDis[ array[ i ]-1 ][ array[ i+1 ]-1 ];
 
 	distance += fEdgeDis[ array[ Ncity-1 ]-1 ][ array[ 0 ]-1 ];
-
+	printf( "Distance: %f, Value: %f\n", distance, value);
 	delete [] check;
-	if( distance != value ) return false;
+	if( abs(distance - value) > 1e-3 ) return false;
 	return true;
 }
 
