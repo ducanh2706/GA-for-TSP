@@ -27,6 +27,15 @@ TEnvironment::~TEnvironment(){
 
 void TEnvironment::define(){
 	fEvaluator->setInstance( fFileNameTSP );
+	def();
+}
+
+void TEnvironment::define(int N, vector<vector<double>> &distances){
+	fEvaluator->setInstance( N, distances );
+	def();
+}
+
+void TEnvironment::def(){
 	int N = fEvaluator->Ncity;
 	fIndexForMating.resize(Npop + 1);
 
@@ -181,4 +190,8 @@ void TEnvironment::writeBest(){
 	fp = fopen( filename, "a");
 	fEvaluator->writeTo( fp, tBest );
 	fclose( fp );
+}
+
+pair<double, vector<int>> TEnvironment::bestSolution(){
+	return fEvaluator->returnBestSolution(tBest);
 }

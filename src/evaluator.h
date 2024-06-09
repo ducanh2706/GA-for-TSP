@@ -23,8 +23,10 @@ public:
 	TEvaluator();
 	~TEvaluator();
 	void setInstance(const string& filename); // sets variables
+	void setInstance(int N, vector<vector<double>> &distances); // sets variables
 	void doIt( TIndi& indi ); // sets indi.fEvaluationValue
 	void writeTo( FILE* fp, TIndi& indi ); // prints out TSP solution
+	pair<double, vector<int>> returnBestSolution(TIndi& indi); // returns the best TSP solution
 	bool checkValid(vector<int>& array, double value ); // checks if TSP solution is valid
 
 	int fNearNumMax; // the maximum value of the number of nearby points

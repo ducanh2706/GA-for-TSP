@@ -42,6 +42,8 @@ public:
 	~TEnvironment();
 
 	void define(); // global initialization
+	void define(int N, vector<vector<double>> &distances);
+	void def(); // initializes the instance
 	void doIt(); // entry point of genetic algorithm
 	void init(); // initializes genetic algorithm
 	bool terminationCondition(); // condition to termination the genetic algorithm
@@ -54,6 +56,7 @@ public:
 
 	void printOn( int n ); // logs out results
 	void writeBest(); // logs out the best TSP solution
+	pair<double, vector<int>> bestSolution(); // returns the best TSP solution
 
 	TEvaluator* fEvaluator; // distance of each edge
 	TCross* tCross; // intersection of edge sets
